@@ -23,7 +23,7 @@ test("jest is running", () => {
 
   const result = championshipDay(leaderboard, topTeamCalendar);
 
-  expect(result).toEqual({
-    opponent: 'torino', date: new Date('2024/04/28')
-  })
+  expect(result).toEqual(
+    { opponent: 'torino', date: new Date('2024/04/28') }
+  )
 })

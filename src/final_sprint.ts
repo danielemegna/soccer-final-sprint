@@ -10,5 +10,8 @@ export type MatchDay = {
 }
 
 export function championshipDay(leaderboard: Leaderboard, topTeamCalendar: TeamCalendar): MatchDay {
-  return topTeamCalendar[3];
+  const advantagePoints = leaderboard[0].points - leaderboard[1].points;
+  const advantageMatchesRaw = advantagePoints / 3;
+  const advantageMatches = Math.floor(advantageMatchesRaw);
+  return topTeamCalendar[topTeamCalendar.length - advantageMatches - 1];
 }
