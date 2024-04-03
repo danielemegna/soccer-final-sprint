@@ -128,4 +128,77 @@ describe('championship day', () => {
     )
   })
 
+  test('last day win in the top teams match at same points', () => {
+    const leaderboard: Leaderboard = [
+      { team: 'inter', points: 79 },
+      { team: 'milan', points: 79 },
+      { team: 'juventus', points: 59 },
+      { team: 'bologna', points: 57 },
+    ]
+    const topTeamCalendar: TeamCalendar = [
+      { opponent: 'udinese', date: new Date('2024/04/08') },
+      { opponent: 'cagliari', date: new Date('2024/04/14') },
+      { opponent: 'verona', date: new Date('2024/04/22') },
+      { opponent: 'torino', date: new Date('2024/04/28') },
+      { opponent: 'sassuolo', date: new Date('2024/05/05') },
+      { opponent: 'frosinone', date: new Date('2024/05/12') },
+      { opponent: 'lazio', date: new Date('2024/05/19') },
+      { opponent: 'milan', date: new Date('2024/05/26') },
+    ]
+
+    const result = championshipDay(leaderboard, topTeamCalendar);
+
+    expect(result).toEqual(
+      { opponent: 'milan', date: new Date('2024/05/26') },
+    )
+  })
+
+  test('last day win with top teams match at same points in the middle', () => {
+    const leaderboard: Leaderboard = [
+      { team: 'inter', points: 79 },
+      { team: 'milan', points: 79 },
+      { team: 'juventus', points: 59 },
+      { team: 'bologna', points: 57 },
+    ]
+    const topTeamCalendar: TeamCalendar = [
+      { opponent: 'udinese', date: new Date('2024/04/08') },
+      { opponent: 'cagliari', date: new Date('2024/04/14') },
+      { opponent: 'milan', date: new Date('2024/04/22') },
+      { opponent: 'torino', date: new Date('2024/04/28') },
+      { opponent: 'sassuolo', date: new Date('2024/05/05') },
+      { opponent: 'frosinone', date: new Date('2024/05/12') },
+      { opponent: 'lazio', date: new Date('2024/05/19') },
+      { opponent: 'verona', date: new Date('2024/05/26') },
+    ]
+
+    const result = championshipDay(leaderboard, topTeamCalendar);
+
+    expect(result).toEqual(
+      { opponent: 'verona', date: new Date('2024/05/26') },
+    )
+  })
+
+  test('null result on last day with same points', () => {
+    const leaderboard: Leaderboard = [
+      { team: 'inter', points: 79 },
+      { team: 'milan', points: 79 },
+      { team: 'juventus', points: 59 },
+      { team: 'bologna', points: 57 },
+    ]
+    const topTeamCalendar: TeamCalendar = [
+      { opponent: 'udinese', date: new Date('2024/04/08') },
+      { opponent: 'cagliari', date: new Date('2024/04/14') },
+      { opponent: 'fiorentina', date: new Date('2024/04/22') },
+      { opponent: 'torino', date: new Date('2024/04/28') },
+      { opponent: 'sassuolo', date: new Date('2024/05/05') },
+      { opponent: 'frosinone', date: new Date('2024/05/12') },
+      { opponent: 'lazio', date: new Date('2024/05/19') },
+      { opponent: 'verona', date: new Date('2024/05/26') },
+    ]
+
+    const result = championshipDay(leaderboard, topTeamCalendar);
+
+    expect(result).toBeNull();
+  })
+
 })
