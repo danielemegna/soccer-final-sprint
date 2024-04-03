@@ -10,21 +10,23 @@ export type MatchDay = {
 }
 
 export function championshipDay(leaderboard: Leaderboard, topTeamCalendar: TeamCalendar): MatchDay | null {
-  let topTeamPoints = leaderboard[0].points;
-  let { team: secondTeamName, points: secondTeamPoints } = leaderboard[1];
+  let upToDateLeaderboard = [...leaderboard];
 
   for (let matchIndex = 0; matchIndex < topTeamCalendar.length; matchIndex++) {
-    const matchDay = topTeamCalendar[matchIndex];
+    const currentMatchDay = topTeamCalendar[matchIndex];
 
-    topTeamPoints += 3;
-    if (matchDay.opponent != secondTeamName)
-      secondTeamPoints += 3;
+    upToDateLeaderboard = upToDateLeaderboard.map(leaderboardItem => {
+      if (leaderboardItem.team == currentMatchDay.opponent)
+        return leaderboardItem;
 
-    const advantagePoints = topTeamPoints - secondTeamPoints;
+      return { team: leaderboardItem.team, points: leaderboardItem.points + 3 }
+    }).sort((a,b) => a.points < b.points ? 1 : -1)
+
+    const advantagePoints = upToDateLeaderboard[0].points - upToDateLeaderboard[1].points;
     const remaningMatches = topTeamCalendar.length - (matchIndex + 1);
     const remaningPoints = remaningMatches * 3;
-    if(remaningPoints < advantagePoints)
-      return matchDay;
+    if (remaningPoints < advantagePoints)
+      return currentMatchDay;
   }
 
   return null;
