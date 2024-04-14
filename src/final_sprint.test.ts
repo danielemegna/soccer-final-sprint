@@ -201,4 +201,27 @@ describe('championship day', () => {
     expect(result).toBeNull();
   })
 
+  test('update [REAL 2024 SEASON AT APRIL 14th]', () => {
+    const leaderboard: Leaderboard = [
+      { team: 'inter', points: 83 },
+      { team: 'milan', points: 69 },
+      { team: 'juventus', points: 63 },
+      { team: 'bologna', points: 59 },
+    ]
+    const topTeamCalendar: TeamCalendar = [
+      { opponent: 'milan', date: new Date('2024/04/22') },
+      { opponent: 'torino', date: new Date('2024/04/28') },
+      { opponent: 'sassuolo', date: new Date('2024/05/05') },
+      { opponent: 'frosinone', date: new Date('2024/05/12') },
+      { opponent: 'lazio', date: new Date('2024/05/19') },
+      { opponent: 'verona', date: new Date('2024/05/26') },
+    ]
+
+    const result = championshipDay(leaderboard, topTeamCalendar);
+
+    expect(result).toEqual(
+      { opponent: 'milan', date: new Date('2024/04/22') },
+    )
+  })
+
 })
